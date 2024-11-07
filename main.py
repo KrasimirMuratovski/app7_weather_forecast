@@ -14,26 +14,29 @@ option = st.selectbox("Select data to view", ("Temperature", "Sky"), key="option
 
 # Function call
 if place:
-	filtered_data = get_data(place, days)
+	try:
+		filtered_data = get_data(place, days)
 
-	st.subheader(f"{option} forecast for the next {days} days in {place}")
+		st.subheader(f"{option} forecast for the next {days} days in {place}")
 
 
-	if option == 'Temperature':
-		temperatures = [dict["main"]["temp"] for dict in filtered_data]
-		dates = [dict["dt_txt"] for dict in filtered_data]
-		figure = px.line(x = dates, y = temperatures, labels={"x": "Date", "y": "Temperature (C)"})
-		st.plotly_chart(figure)
-	elif option == 'Sky':
-		filtered_data = [dict["weather"][0]["main"] for dict in filtered_data]
-		d={
-			'Clear': 'images/clear.png',
-			'Clouds': 'images/cloud.png',
-			'Rain': 'images/rain.png',
-			'Snow': 'images/snow.png',
-		}
-		data = [d[x] for x in filtered_data]
-		st.image(data, width = 115 )
+		if option == 'Temperature':
+			temperatures = [dict["main"]["temp"] for dict in filtered_data]
+			dates = [dict["dt_txt"] for dict in filtered_data]
+			figure = px.line(x = dates, y = temperatures, labels={"x": "Date", "y": "Temperature (C)"})
+			st.plotly_chart(figure)
+		elif option == 'Sky':
+			filtered_data = [dict["weather"][0]["main"] for dict in filtered_data]
+			d={
+				'Clear': 'images/clear.png',
+				'Clouds': 'images/cloud.png',
+				'Rain': 'images/rain.png',
+				'Snow': 'images/snow.png',
+			}
+			data = [d[x] for x in filtered_data]
+			st.image(data, width = 115 )
+	except KeyError:
+		st.write("No weather data")
 
 	#
 # dates = ["01-11-2024", "02-11-2024", "03-11-2024"]
