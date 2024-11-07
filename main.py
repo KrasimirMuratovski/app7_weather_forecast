@@ -16,7 +16,7 @@ option = st.selectbox("Select data to view", ("Temperature", "Sky"), key="option
 if place:
 	filtered_data = get_data(place, days)
 
-	st.subheader(f"{option} forecast for the next {place} days in {days}")
+	st.subheader(f"{option} forecast for the next {days} days in {place}")
 
 
 	if option == 'Temperature':
