@@ -26,7 +26,14 @@ if place:
 		st.plotly_chart(figure)
 	elif option == 'Sky':
 		filtered_data = [dict["weather"][0]["main"] for dict in filtered_data]
-		st.image()
+		d={
+			'Clear': 'images/clear.png',
+			'Clouds': 'images/cloud.png',
+			'Rain': 'images/rain.png',
+			'Snow': 'images/snow.png',
+		}
+		data = [d[x] for x in filtered_data]
+		st.image(data, width = 115 )
 
 	#
 # dates = ["01-11-2024", "02-11-2024", "03-11-2024"]
